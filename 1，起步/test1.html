@@ -16,7 +16,8 @@
         const h1 = React.createElement('h1', {
             title: '第一个元素'
         }, 'hello word', p);
-        // h1 p 都是 虚拟dom对象 
+        console.log(h1);
+        // h1 p 都是 虚拟dom对象 => react对象
         ReactDOM.render(h1, document.getElementById('root'))
     </script>
 </body>
