@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MyHeader from './components/Header.jsx';
 import WithLog from './HOC/WithLog.jsx';
 
-// const LogWrapper = WithLog(Header);
+const LogWrapper = WithLog(MyHeader);
 const test = () => Promise.resolve()
 console.log(test());
 

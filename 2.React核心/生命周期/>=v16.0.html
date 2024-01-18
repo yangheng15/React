@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello World</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      class App extends React.Component {
+        state = {
+          name: '张三',
+        };
+        render() {
+          return (
+            <>
+              <button
+                onClick={() => {
+                  this.setState({
+                    name: '李四',
+                  });
+                }}
+              >
+                点击
+              </button>
+              <Child name={this.state.name} />
+            </>
+          );
+        }
+      }
+
+      class Child extends React.Component {
+        // 挂载阶段:
+        constructor(props) {
+          console.log('constructor');
+          super();
+          console.log(props, 'props');
+          this.state = {
+            ...props,
+          };
+        }
+
+        // componentWillMount() {
+        //   console.log('componentWillMount');
+        // }
+
+        componentDidMount() {
+          console.log('componentDidMount');
+        }
+
+        render() {
+          console.log('render');
+          return <div>{this.state.name}</div>;
+        }
+
+        // 更新阶段:
+        // componentWillReceiveProps(nextProps, preState) {
+        //   console.log('componentWillReceiveProps');
+        //   console.log(nextProps, preState, 'nextProps, preState');
+        //   this.setState({
+        //     ...nextProps,
+        //   });
+        // }
+        // 替换为
+        static getDerivedStateFromProps(props) {
+          console.log('getDerivedStateFromProps');
+          console.log(props, 'props');
+          return {
+            ...props,
+          };
+        }
+
+        shouldComponentUpdate(nextProps, nextState) {
+          console.log('shouldComponentUpdate');
+          console.log(nextProps, nextState, 'nextProps, nextState');
+          return true;
+        }
+
+        // componentWillUpdate(nextProps, nextState) {
+        //   console.log('componentWillUpdate');
+        //   console.log(nextProps, nextState, 'nextProps, nextState');
+        // }
+
+        componentDidUpdate(prevProps, prevState) {
+          console.log('componentDidUpdate');
+          console.log(prevProps, prevState, 'prevProps, prevState');
+        }
+      }
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
+</html>
